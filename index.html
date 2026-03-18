@@ -20,6 +20,7 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            transition: opacity 2s ease;
         }
 
         .ambient-glow {
@@ -71,37 +72,40 @@
             text-align: center;
         }
 
-        .greeting {
+        .text-seq {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
             font-size: 3.5rem;
             font-weight: 300;
             letter-spacing: 5px;
             opacity: 0;
-            transform: translateY(20px);
-            transition: 3s ease;
+            transition: opacity 1.5s ease;
             background: linear-gradient(135deg, #fff, #ffb3c6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 50px;
+            z-index: 2000;
+            text-align: center;
+            width: 90%;
+            pointer-events: none;
         }
 
-        .greeting.show {
+        .text-seq.show {
             opacity: 1;
-            transform: translateY(0);
         }
 
-        .made-by {
+        .made-by-start {
             position: absolute;
-            bottom: 20px;
-            right: 25px;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.4);
-            letter-spacing: 1px;
-            opacity: 0;
-            transition: 3s ease 2s;
+            bottom: 30px;
+            font-size: 0.9rem;
+            color: rgba(255, 179, 198, 0.6);
+            letter-spacing: 2px;
+            animation: pulse-op 2s infinite alternate;
         }
 
-        body.active .made-by {
-            opacity: 1;
+        @keyframes pulse-op {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
         }
 
         .flower-wrapper {
@@ -158,57 +162,37 @@
             transition: 1s ease;
         }
 
-        body.active .stem {
-            stroke-dashoffset: 0;
-            transition-delay: 1.5s;
-        }
+        body.active .stem { stroke-dashoffset: 0; transition-delay: 0.5s; transition-duration: 2s; }
+        body.active .leaf-l { transform: scale(1) rotate(0deg); opacity: 1; transition-delay: 1.0s; transition-duration: 3s; }
+        body.active .leaf-r { transform: scale(1) rotate(0deg); opacity: 1; transition-delay: 1.5s; transition-duration: 3s; }
+        
+        body.active .petal, body.active .stamen { transform: scale(1) rotate(0deg); opacity: 1; }
 
-        body.active .leaf-l {
-            transform: scale(1) rotate(0deg);
-            opacity: 1;
-            transition-delay: 2s;
-            transition-duration: 5s;
-        }
+        body.active .bp-1 { transition-delay: 2.0s; transition-duration: 5s; }
+        body.active .bp-2 { transition-delay: 2.5s; transition-duration: 5s; }
+        body.active .bp-3 { transition-delay: 3.0s; transition-duration: 5s; }
+        body.active .bp-4 { transition-delay: 3.5s; transition-duration: 5s; }
+        body.active .bp-5 { transition-delay: 4.0s; transition-duration: 5s; }
 
-        body.active .leaf-r {
-            transform: scale(1) rotate(0deg);
-            opacity: 1;
-            transition-delay: 2.5s;
-            transition-duration: 5s;
-        }
+        body.active .fp-1 { transition-delay: 4.5s; transition-duration: 5s; }
+        body.active .fp-2 { transition-delay: 5.0s; transition-duration: 5s; }
+        body.active .fp-3 { transition-delay: 5.5s; transition-duration: 5s; }
+        body.active .fp-4 { transition-delay: 6.0s; transition-duration: 5s; }
+        body.active .fp-5 { transition-delay: 6.5s; transition-duration: 5s; }
 
-        body.active .petal, body.active .stamen {
-            transform: scale(1) rotate(0deg);
-            opacity: 1;
-        }
+        body.active .stamen { transition-delay: 7s; }
 
-        body.active .bp-1 { transition-delay: 3.5s; }
-        body.active .bp-2 { transition-delay: 4.5s; }
-        body.active .bp-3 { transition-delay: 5.5s; }
-        body.active .bp-4 { transition-delay: 6.0s; }
-        body.active .bp-5 { transition-delay: 6.5s; }
+        body.active .anther, body.active .stigma { transform: scale(1); transition-duration: 0.5s; }
 
-        body.active .fp-1 { transition-delay: 7.0s; }
-        body.active .fp-2 { transition-delay: 7.5s; }
-        body.active .fp-3 { transition-delay: 8.0s; }
-        body.active .fp-4 { transition-delay: 8.5s; }
-        body.active .fp-5 { transition-delay: 9.0s; }
-
-        body.active .stamen { transition-delay: 10s; }
-
-        body.active .anther, body.active .stigma {
-            transform: scale(1);
-        }
-
-        body.active .a1 { transition-delay: 10.5s; }
-        body.active .a2 { transition-delay: 10.7s; }
-        body.active .a3 { transition-delay: 10.9s; }
-        body.active .a4 { transition-delay: 11.1s; }
-        body.active .stigma { transition-delay: 11.5s; }
+        body.active .a1 { transition-delay: 7.2s; }
+        body.active .a2 { transition-delay: 7.4s; }
+        body.active .a3 { transition-delay: 7.6s; }
+        body.active .a4 { transition-delay: 7.8s; }
+        body.active .stigma { transition-delay: 8.0s; }
 
         body.active .flower-wrapper {
             animation: float-flower 8s ease-in-out infinite alternate;
-            animation-delay: 13s;
+            animation-delay: 9s;
         }
 
         @keyframes float-flower {
@@ -221,7 +205,7 @@
             display: none;
             flex-direction: column;
             align-items: center;
-            gap: 100vh;
+            gap: 35vh;
             padding-top: 50vh;
             padding-bottom: 50vh;
         }
@@ -255,8 +239,8 @@
             width: 85%;
             max-width: 350px;
             opacity: 0;
-            transform: translateY(100px) scale(0.9);
-            transition: all 2s cubic-bezier(0.25, 0.1, 0.25, 1);
+            transform: translateY(100px) scale(0.3);
+            transition: all 1.2s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
         .cat-card::before {
@@ -276,7 +260,17 @@
 
         .cat-card.visible {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: translateY(0) scale(0.55) rotate(-6deg) translateX(-60px);
+        }
+
+        .cat-card:nth-child(even).visible {
+            transform: translateY(0) scale(0.55) rotate(6deg) translateX(60px);
+        }
+
+        .cat-card.zoomed {
+            transform: translateY(0) scale(1.15) rotate(0deg) translateX(0) !important;
+            filter: drop-shadow(0 0 50px rgba(255, 112, 150, 0.5));
+            z-index: 10;
         }
 
         .cat-card img {
@@ -289,15 +283,16 @@
 </head>
 <body>
     <audio id="song" src="those_eyes.mp3" preload="auto"></audio>
+    <div id="text-sequence" class="text-seq"></div>
 
     <div id="start-screen">
         <button id="start-btn">Tap to Bloom</button>
+        <div class="made-by-start">made by arashi for Siyeraa</div>
     </div>
 
-    <section class="hero">
+    <section class="hero" id="hero-section">
         <div class="ambient-glow"></div>
         <div class="main-content">
-            <h1 class="greeting">Hi Siyera</h1>
             <div class="flower-wrapper">
                 <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                     <defs>
@@ -362,7 +357,6 @@
                 </svg>
             </div>
         </div>
-        <div class="made-by">made by arashi for Siyeraa</div>
     </section>
 
     <section class="gallery">
@@ -392,7 +386,8 @@
         let btn = document.getElementById('start-btn');
         let scrn = document.getElementById('start-screen');
         let song = document.getElementById('song');
-        let txt = document.querySelector('.greeting');
+        let hero = document.getElementById('hero-section');
+        let seq = document.getElementById('text-sequence');
 
         btn.onclick = function() {
             scrn.style.opacity = '0';
@@ -403,25 +398,78 @@
             song.play();
 
             setTimeout(function() {
-                txt.classList.add('show');
-            }, 800);
-
-            setTimeout(function() {
                 document.body.classList.add('active');
-            }, 1500);
+            }, 500);
 
+            // Flower completes around 8s. Let them stare until 11s.
+            setTimeout(() => {
+                hero.style.opacity = '0'; // Screen fades to black 
+            }, 11000);
+
+            // Hide the hero to avoid ghost layers blocking the clicks later
+            setTimeout(() => {
+                hero.style.display = 'none';
+            }, 13000);
+
+            const phrases = ["Hi Siyera", "how are you?", "I hope your doing great :)", "- From Arashi, Dke, Kinchana"];
+            let textDelay = 12500;
+            
+            // Loop through texts: fade in, fade out
+            for (let i = 0; i < phrases.length; i++) {
+                setTimeout(() => {
+                    seq.innerText = phrases[i];
+                    seq.classList.add('show');
+                }, textDelay + (i * 4500));
+
+                setTimeout(() => {
+                    seq.classList.remove('show');
+                }, textDelay + (i * 4500) + 3300); // text visible for 3.3s
+            }
+
+            let startGallery = textDelay + (phrases.length * 4500) + 1500;
+
+            // Start gallery zooming sequence
             setTimeout(function() {
                 document.body.style.overflowY = 'auto'; 
                 document.querySelector('.gallery').classList.add('active');
                 
                 let cats = document.querySelectorAll('.cat-card');
+                
+                cats.forEach(c => c.classList.add('visible'));
+
                 cats.forEach((cat, index) => {
+                    let baseDelay = 1000 + (index * 5500);
+
                     setTimeout(() => {
                         cat.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        cat.classList.add('visible');
-                    }, 1000 + (index * 4000));
+                    }, baseDelay);
+
+                    setTimeout(() => {
+                        cat.classList.add('zoomed');
+                    }, baseDelay + 800);
+
+                    if (index < cats.length - 1) {
+                        setTimeout(() => {
+                            cat.classList.remove('zoomed');
+                        }, baseDelay + 4000);
+                    }
                 });
-            }, 21000); 
+
+                if (cats.length > 0) {
+                    let fadeTime = 1000 + (cats.length * 5500) + 2000; 
+                    setTimeout(() => {
+                        let fadeAudio = setInterval(function () {
+                            if (song.volume > 0.05) {
+                                song.volume -= 0.05;
+                            } else {
+                                song.volume = 0;
+                                song.pause();
+                                clearInterval(fadeAudio);
+                            }
+                        }, 250);
+                    }, fadeTime);
+                }
+            }, startGallery); 
         };
     </script>
 </body>
