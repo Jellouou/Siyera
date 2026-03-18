@@ -713,16 +713,6 @@
                 if (cats.length > 0) {
                     let fadeTime = 1000 + (cats.length * 5500) + 2000; 
                     setTimeout(() => {
-                        let fadeAudio = setInterval(function () {
-                            if (song.volume > 0.05) {
-                                song.volume -= 0.05;
-                            } else {
-                                song.volume = 0;
-                                song.pause();
-                                clearInterval(fadeAudio);
-                            }
-                        }, 250);
-
                         let gallery = document.querySelector('.gallery');
                         gallery.style.transition = 'opacity 2s ease';
                         gallery.style.opacity = '0';
@@ -746,18 +736,51 @@
 
                             let namesDelay = eDelay + (endPhrases.length * 4500) + 1000;
                             
+                            // Arashi fade in/out
                             setTimeout(() => {
                                 seq.innerHTML = "Arashi";
                                 seq.classList.add('show');
                             }, namesDelay);
-
                             setTimeout(() => {
-                                seq.innerHTML = "Arashi<br>Dke";
-                            }, namesDelay + 2000);
+                                seq.classList.remove('show');
+                            }, namesDelay + 2500);
 
+                            // Dke fade in/out
                             setTimeout(() => {
-                                seq.innerHTML = "Arashi<br>Dke<br>Kinchana";
+                                seq.innerHTML = "Dke";
+                                seq.classList.add('show');
                             }, namesDelay + 4000);
+                            setTimeout(() => {
+                                seq.classList.remove('show');
+                            }, namesDelay + 6500);
+
+                            // Kinchana fade in/out
+                            setTimeout(() => {
+                                seq.innerHTML = "Kinchana";
+                                seq.classList.add('show');
+                            }, namesDelay + 8000);
+                            setTimeout(() => {
+                                seq.classList.remove('show');
+                            }, namesDelay + 10500);
+
+                            // Final all 3 names + heart
+                            setTimeout(() => {
+                                seq.innerHTML = "Arashi<br>Dke<br>Kinchana<br><br><span style='color:#ff477e;font-size:3rem;text-shadow:0 0 20px #ff477e;'>❤️</span>";
+                                seq.classList.add('show');
+                            }, namesDelay + 12000);
+
+                            // Audio fades exactly when the final heart screen appears!
+                            setTimeout(() => {
+                                let fadeAudio = setInterval(function () {
+                                    if (song.volume > 0.05) {
+                                        song.volume -= 0.05;
+                                    } else {
+                                        song.volume = 0;
+                                        song.pause();
+                                        clearInterval(fadeAudio);
+                                    }
+                                }, 300); // 300ms so it fades slightly slower
+                            }, namesDelay + 12000);
 
                         }, 2000);
                     }, fadeTime);
