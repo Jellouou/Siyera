@@ -491,7 +491,7 @@
                 hero.style.display = 'none';
             }, 13000);
 
-            const phrases = ["Hi Siyera", "how are you?", "I hope your doing great :)", "- From Arashi, Dke, Kinchana"];
+            const phrases = ["Hi Siyera", "how are you?", "I hope your doing great :)"];
             let textDelay = 12500;
             
             // Loop through texts: fade in, fade out
@@ -547,6 +547,44 @@
                                 clearInterval(fadeAudio);
                             }
                         }, 250);
+
+                        let gallery = document.querySelector('.gallery');
+                        gallery.style.transition = 'opacity 2s ease';
+                        gallery.style.opacity = '0';
+
+                        setTimeout(() => {
+                            gallery.style.display = 'none';
+                            
+                            const endPhrases = ["Thank you", "for being friends with us.", "- from your dear great friends"];
+                            let eDelay = 0;
+                            
+                            for (let i = 0; i < endPhrases.length; i++) {
+                                setTimeout(() => {
+                                    seq.innerText = endPhrases[i];
+                                    seq.classList.add('show');
+                                }, eDelay + (i * 4500));
+
+                                setTimeout(() => {
+                                    seq.classList.remove('show');
+                                }, eDelay + (i * 4500) + 3300);
+                            }
+
+                            let namesDelay = eDelay + (endPhrases.length * 4500) + 1000;
+                            
+                            setTimeout(() => {
+                                seq.innerHTML = "Arashi";
+                                seq.classList.add('show');
+                            }, namesDelay);
+
+                            setTimeout(() => {
+                                seq.innerHTML = "Arashi<br>Dke";
+                            }, namesDelay + 2000);
+
+                            setTimeout(() => {
+                                seq.innerHTML = "Arashi<br>Dke<br>Kinchana";
+                            }, namesDelay + 4000);
+
+                        }, 2000);
                     }, fadeTime);
                 }
             }, startGallery); 
