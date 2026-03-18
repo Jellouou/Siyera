@@ -108,6 +108,45 @@
             100% { opacity: 1; }
         }
 
+        .joke-screen {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #0b090a;
+            z-index: 2000;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            transition: opacity 1s ease;
+            opacity: 0;
+        }
+
+        .joke-text {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+
+        .joke-btn {
+            background: rgba(255, 112, 150, 0.1);
+            border: 1px solid #ffb3c6;
+            color: #ffb3c6;
+            padding: 16px 42px;
+            font-size: 1.5rem;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .joke-btn:hover {
+            background: rgba(255, 112, 150, 0.3);
+            scale: 1.05;
+        }
+
         .flower-wrapper {
             width: 350px;
             height: 350px;
@@ -290,6 +329,14 @@
         <div class="made-by-start">made by arashi for Siyeraa</div>
     </div>
 
+    <div id="joke-screen" class="joke-screen">
+        <h2 id="joke-text" class="joke-text">ehem bago tayo mag start gwapo ba si arashi?</h2>
+        <div id="joke-buttons">
+            <button id="joke-yes" class="joke-btn">Yes</button>
+            <button id="joke-no" class="joke-btn">No</button>
+        </div>
+    </div>
+
     <section class="hero" id="hero-section">
         <div class="ambient-glow"></div>
         <div class="main-content">
@@ -388,13 +435,46 @@
         let song = document.getElementById('song');
         let hero = document.getElementById('hero-section');
         let seq = document.getElementById('text-sequence');
+        let jokeScreen = document.getElementById('joke-screen');
+        let jokeYes = document.getElementById('joke-yes');
+        let jokeNo = document.getElementById('joke-no');
+        let jokeText = document.getElementById('joke-text');
+
+        let yesSize = 1;
 
         btn.onclick = function() {
             scrn.style.opacity = '0';
             setTimeout(function() {
-                scrn.remove();
+                scrn.style.display = 'none';
+                jokeScreen.style.display = 'flex';
+                setTimeout(() => { jokeScreen.style.opacity = '1'; }, 50);
             }, 1000);
+        };
 
+        jokeNo.onclick = function() {
+            yesSize += 0.5;
+            jokeYes.style.transform = `scale(${yesSize})`;
+            jokeYes.style.margin = `0 ${yesSize * 20}px`; 
+            if (yesSize > 2) {
+                jokeNo.style.opacity = '0'; 
+                setTimeout(() => { jokeNo.style.display = 'none'; }, 300);
+            }
+        };
+
+        jokeYes.onclick = function() {
+            jokeText.innerText = "Thanks - by arashi";
+            document.getElementById('joke-buttons').style.display = 'none';
+            
+            setTimeout(() => {
+                jokeScreen.style.opacity = '0';
+                setTimeout(() => {
+                    jokeScreen.style.display = 'none';
+                    startBloomingSequence();
+                }, 1000);
+            }, 2000);
+        };
+
+        function startBloomingSequence() {
             song.play();
 
             setTimeout(function() {
@@ -470,7 +550,7 @@
                     }, fadeTime);
                 }
             }, startGallery); 
-        };
+        }
     </script>
 </body>
 </html>
