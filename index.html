@@ -1515,17 +1515,27 @@
             }
         };
 
+        const followUpQs = [
+            "are you sincere?",
+            "are you sure?",
+            "are you really sureeee?",
+            "is that for real?",
+            "iz that from the heart :)"
+        ];
+
         jokeYes.onclick = function () {
-            if (jokeState === 0) {
-                jokeState = 1;
-                jokeText.innerText = "are you sincere?";
+            if (jokeState < followUpQs.length) {
+                jokeText.innerText = followUpQs[jokeState];
+                jokeState++;
+                
+                // reset Yes size and No button visibility
                 yesSize = 1;
                 jokeYes.style.transform = `scale(1)`;
                 jokeYes.style.margin = `0 10px`;
                 jokeNo.style.display = 'inline-block';
                 jokeNo.style.opacity = '1';
             } else {
-                jokeText.innerText = "Thanks - by arashi";
+                jokeText.innerText = "now the thanks by arashi";
                 document.getElementById('joke-buttons').style.display = 'none';
                 setTimeout(() => {
                     jokeScreen.style.opacity = '0';
