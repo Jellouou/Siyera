@@ -730,9 +730,12 @@
         }
 
         .gift-box {
+            position: relative;
+            left: 0px;
+            top: 0px;
             cursor: pointer;
             user-select: none;
-            transition: transform 0.15s ease;
+            transition: transform 0.15s ease, left 0.2s cubic-bezier(0.25, 0.1, 0.25, 1), top 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
             filter: drop-shadow(0 0 30px rgba(255, 112, 150, 0.5));
             animation: gift-float 3s ease-in-out infinite alternate;
         }
@@ -1505,10 +1508,25 @@
             }, 1000);
         };
 
+        const noResponses = [
+            "di ba ako gwapo? 😭",
+            "are u not sincere 😭",
+            "pls be sure 🥺",
+            "why not sureeee 💔",
+            "is that all not real 💔",
+            "not from the heart? 😭"
+        ];
+
         jokeNo.onclick = function () {
             yesSize += 0.5;
             jokeYes.style.transform = `scale(${yesSize})`;
             jokeYes.style.margin = `0 ${yesSize * 20}px`;
+            
+            // change text to current sad fallback
+            if (jokeState < noResponses.length) {
+                jokeText.innerText = noResponses[jokeState];
+            }
+
             if (yesSize > 2) {
                 jokeNo.style.opacity = '0';
                 setTimeout(() => { jokeNo.style.display = 'none'; }, 300);
@@ -1535,7 +1553,7 @@
                 jokeNo.style.display = 'inline-block';
                 jokeNo.style.opacity = '1';
             } else {
-                jokeText.innerText = "Salamat :) - by arashi";
+                jokeText.innerText = "now the thanks by arashi";
                 document.getElementById('joke-buttons').style.display = 'none';
                 setTimeout(() => {
                     jokeScreen.style.opacity = '0';
@@ -1746,9 +1764,10 @@
 
         // ===== GIFT BOX =====
         const trollMessages = [
-            "wait not yet 😭",
-            "siyera patience...",
-            "almost!! just one more tap 🙏",
+            "woops mabagal kamay mo 🤣",
+            "bilisan mo pa!! 😂",
+            "isa pa nga! 😝",
+            "siyera patience... almost there 🙏",
             "okay fine!! 🎉"
         ];
         let tapCount = 0;
@@ -1759,6 +1778,27 @@
             const box = document.getElementById('gift-box');
             const txt = document.getElementById('gift-troll-text');
 
+            if (tapCount < 3) {
+                // RUN AWAY LOGIC
+                const maxDistX = window.innerWidth * 0.3;
+                const maxDistY = window.innerHeight * 0.3;
+                const rx = (Math.random() - 0.5) * maxDistX * 2;
+                const ry = (Math.random() - 0.5) * maxDistY * 2;
+                box.style.left = rx + 'px';
+                box.style.top = ry + 'px';
+
+                txt.style.opacity = '0';
+                setTimeout(() => {
+                    txt.innerText = trollMessages[tapCount];
+                    txt.style.opacity = '1';
+                }, 150);
+                tapCount++;
+                return;
+            }
+
+            // At tapCount >= 3, let her catch it and shake it!
+            box.style.left = '0px';
+            box.style.top = '0px';
             box.classList.remove('shake');
             void box.offsetWidth;
             box.classList.add('shake');
